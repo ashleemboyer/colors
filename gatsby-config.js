@@ -1,8 +1,9 @@
 module.exports = {
+  pathPrefix: "colors",
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: 'Material Palette a11y Helper',
+    description: 'Should I use black or white text on a colorful background?',
+    author: `@ashleemboyer`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,

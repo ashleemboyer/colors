@@ -1,21 +1,63 @@
 import React from "react"
-import { Link } from "gatsby"
+import { graphql } from "gatsby"
 
-import Layout from "../components/layout"
-import Image from "../components/image"
+import Layout, { get_text_color } from "../components/layout"
 import SEO from "../components/seo"
 
-const IndexPage = () => (
-  <Layout>
-    <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <div style={{ maxWidth: `300px`, marginBottom: `1.45rem` }}>
-      <Image />
-    </div>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
-)
+export default ({ data }) => {
+  var edges = data.allSitePage.edges;
+  return (
+    <Layout>
+      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
+      {
+        edges.map(({ node }) => {
+          if (node && node.context && node.context.name) {
+            var bgColor;
+            for (var i in node.context.tones) {
+              if (node.context.tones[i].tone === '500') {
+                bgColor = node.context.tones[i].default;
+              }
+            }
+            return <div style={{ display: 'inline-block' }}>
+              <a
+                style={{
+                  width: '200px',
+                  height: '200px',
+                  lineHeight: '200px',
+                  verticalAlign: 'middle',
+                  backgroundColor: bgColor,
+                  display: 'inline-block',
+                  textDecoration: 'none',
+                  color: get_text_color(bgColor),
+                  margin: '4px',
+                  borderRadius: '4px',
+                }}
+                href={node.context.name}
+              >
+                {node.context.name}
+              </a>
+            </div>
+          }
+        })
+      }
+    </Layout>
+  )
+}
 
-export default IndexPage
+export const query  = graphql`
+  query {
+    allSitePage {
+      edges {
+        node {
+          context {
+            name
+            tones {
+              tone
+              default
+            }
+          }
+        }
+      }
+    }
+  }
+`
