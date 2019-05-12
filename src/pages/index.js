@@ -1,14 +1,11 @@
 import React from "react"
 import { graphql } from "gatsby"
-
 import Layout, { get_text_color } from "../components/layout"
-import SEO from "../components/seo"
 
 export default ({ data }) => {
   var edges = data.allSitePage.edges;
   return (
     <Layout>
-      <SEO title="Home" keywords={[`gatsby`, `application`, `react`]} />
       {
         edges.map(({ node }) => {
           if (node && node.context && node.context.name) {
